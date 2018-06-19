@@ -1,0 +1,501 @@
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="Chrome=1,IE=Edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php 
+    if(!empty($navinfor['keyboard'])){
+      
+      echo '<meta name="keywords" content="'.$navinfor['keyboard'].'\" />'.PHP_EOL;
+
+    }
+    ?>
+    <meta name="description" content="[!--pagedes--]" />
+    <meta charset="utf-8" />
+    <title>
+        <?if(!empty($navinfor['ftitle'])) {?>[!--ftitle--]
+            <?}else {?>[!--pagetitle--]
+                <?}?>
+    </title>
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/bootstrap.min.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/common.css" />
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/style.css" />
+    <link rel="stylesheet" type="text/css" href="[!--news.url--]css/css.css" />
+    <!--[if lt IE 9]>
+      <script src="[!--news.url--]js/html5shiv.min.js"></script>
+      <script src="[!--news.url--]js/respond.min.js"></script>
+<![endif]-->
+    <!-- Google Tag Manager -->
+    <script>
+    (function(w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({
+            'gtm.start': new Date().getTime(),
+            event: 'gtm.js'
+        });
+        var f = d.getElementsByTagName(s)[0],
+            j = d.createElement(s),
+            dl = l != 'dataLayer' ? '&l=' + l : '';
+        j.async = true;
+        j.src =
+            'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+        f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-T9MV8R');
+    </script>
+    <!-- End Google Tag Manager -->
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?896396cbedd276fbd880f3310b06d244";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+    <script type="text/javascript" src="[!--news.url--]js/jquery-1.11.1.min.js"></script>
+<script type = "text/javascript" >
+var cse;
+var text = '';
+//初始化回调函数示例
+function init() {
+  cse = new BCse.Search("16882447474839650815"); //参数为您的API引擎ID，已自动填写，必需。
+}
+
+function loadScript() {
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.charset = "utf-8";
+  script.src = "http://zhannei.baidu.com/api/customsearch/apiaccept?sid=16882447474839650815&v=2.0&callback=init";
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(script, s);
+}
+
+
+loadScript();
+function getUrlParam(name) {
+  var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+  var r = window.location.search.substr(1).match(reg); //匹配目标参数
+  if (r != null) return decodeURI(r[2]);
+  return null; //返回参数值
+}
+
+
+
+
+
+function checkcopy(data, arr) {
+  var tips = true;
+  var searchcookie=arr;
+  for (var i = 0; i < arr.length; i++) {
+    if ($.trim(arr[i]) == $.trim(data)) {
+      var arr = searchcookie.splice(0, i + 1);
+      var arr1 = arr.splice(0, i);
+      arr = arr.concat(arr1);
+      searchcookie = arr.concat(searchcookie);
+      tips = false;
+    }
+  }
+  if (tips) {
+    searchcookie.splice(0, 0, $.trim(data));
+  }
+  return searchcookie;
+}
+
+function addcookie() {
+  var searchcookie = Array(0);
+  var searchtext = '';
+  searchtext = $('.search-container01 #searchkey').val();
+  if (!window.localStorage) {
+    alert("浏览器支持localstorage");
+    return false;
+  } else {
+    if (localStorage.getItem("search")) {
+      searchcookie = JSON.parse(localStorage.getItem("search"));
+    }
+    if (searchcookie.length < 8) {
+      searchcookie=checkcopy(searchtext, searchcookie);
+    } else {
+      searchcookie.pop();
+      searchcookie=checkcopy(searchtext, searchcookie);
+    }
+    var str = JSON.stringify(searchcookie);
+    localStorage.setItem("search", str);
+  }
+
+}
+
+function showcookie() {
+  var searchcookie = Array(0);
+  var searchkey = '';
+  $(".search-container01 .search-cookie").empty();
+  if (!window.localStorage) {
+    alert("浏览器支持localstorage");
+    return false;
+  } else {
+    if (localStorage.getItem("search")) {
+      searchcookie = JSON.parse(localStorage.getItem("search"));
+    }
+    for (var i = 0; i < searchcookie.length; i++) {
+      searchkey += "<li data-key='" + searchcookie[i] + "'>" + searchcookie[i] + "</li>";
+    }
+    $(".search-container01 .search-cookie").append(searchkey).on('click', 'li', function(e) {
+      e = e || window.event;
+      e.stopPropagation();
+      $('.search-container01 .search-cookie').addClass('hide');
+      var b = $(this).data('key');
+      $('.search-container01 #searchkey').val(b);
+      addcookie();
+      showresult(1, b);
+    });
+  }
+}
+
+function adddata(e) {
+  var appendHtml = '';
+  for (var i = 0; i < e.length - 1; i++) {
+    appendHtml += "<div class='search-result'><div class='search-result-title'><a target='_blank' href='" + e[i]['linkUrl'] + "'><h3>" + e[i]['title'] + "</h3></a></div><div class='search-result-content'><div class='fl'>" + e[i]['image'] + "</div><div><p>" + e[i]['abstract'] + "</p><p><a target='_blank' href='" + e[1]['linkUrl'] + "'>" + e[i]['linkUrl'] + "</a></p></div></div></div>";
+  }
+  $(".results-inner-wrapper").append(appendHtml);
+}
+
+function addpage(total, currentpage) {
+  var nextpage = 1;
+  var fontpage = 1;
+  var pagenum = 1;
+  var appendPage= '';
+  $(".more-results").empty();
+  appendPage += "<nav aria-label='Page navigation'><ul class='pagination'>";
+  pagenum = Math.ceil(total['totalNum'] / 10);
+  nextpage = currentpage + 1;
+  fontpage = currentpage - 1;
+  if (pagenum == 1) {
+    appendPage += "";
+  } else if ((pagenum > 1) && (pagenum < 11)) {
+    for (var i = 1; i < pagenum + 1; i++) {
+      if (i == currentpage) {
+        appendPage += "<li class='active'><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+      } else {
+        appendPage += "<li><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+      }
+    }
+  } else if (pagenum > 10) {
+    if (currentpage < 6) {
+      for (var i = 1; i < 11; i++) {
+        if (i == currentpage) {
+          appendPage += "<li class='active'><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        } else {
+          appendPage += "<li><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        }
+
+      }
+      appendPage += "<li><a href='javascript:void(0);' data-page='" + nextpage + "'>下一页></a></li>";
+    } else if ((currentpage > 5) && (pagenum - currentpage < 6)) {
+      appendPage += "<li><a href='javascript:void(0);' data-page='" + 11 + "'><上一页</a></li>";
+      for (var i = pagenum - 10; i < pagenum + 1; i++) {
+        if (i == currentpage) {
+          appendPage += "<li class='active'><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        } else {
+          appendPage += "<li><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        }
+      }
+    } else {
+      appendPage += "<li><a href='javascript:void(0);' data-page='" + fontpage + "'><上一页</a></li>";
+      for (var i = currentpage - 5; i < currentpage + 6; i++) {
+        if (i == currentpage) {
+          appendPage += "<li class='active'><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        } else {
+          appendPage += "<li><a href='javascript:void(0);' data-page='" + i + "'>" + i + "</a></li>";
+        }
+      }
+      appendPage += "<li><a href='javascript:void(0);' data-page='" + nextpage + "'>下一页></a></li>";
+    }
+  }
+  appendPage += "</ul></nav>";
+  $(".more-results").append(appendPage);
+}
+
+function showresult(i, content) {
+  $(".results-inner-wrapper").empty();
+  var searchtext = '';
+  if (content) {
+    searchtext = content;
+  } else {
+    searchtext = $('.search-container01 #searchkey').val();
+  }
+  $(".results-tips").empty();
+  $(".more-results").empty();
+  //判断i取值范围
+  $('.loading').removeClass('hide');
+  cse.getResult(searchtext, function(data) {
+    if (data) {
+      $('.loading').addClass('hide');
+      cse.getSearchInfo(searchtext, function(num) {
+        adddata(data);
+        addpage(num, i);
+        $(".results-tips").append("<p class='fl'>搜索结果页</p><p class='fr'>找到关于“<em></em>”的结果数约<span>" + num['totalNum'] + "</span>条</p><div class='clboth'></div>");
+         $(".results-tips em").text(searchtext);
+        $('.pagination li').each(function(i) {
+          $(this).on('click', function() {
+            var a = $(this).find('a').data('page');
+            showresult(a);
+          });
+        });
+      });
+      $('#searchresult').show();
+    }else{
+      setTimeout(function() {
+        $('.loading').addClass('hide');
+      }, 300);
+    } 
+  }, i);
+}
+
+
+$(document).ready(function() {
+  text = $.trim(getUrlParam('searchtext'));
+if(text){
+   $('.search-container01 #searchkey').val(text);
+  $('.loading').removeClass('hide');
+    showresult(1,text);
+    addcookie();
+}
+ $(".search-container01 .search-tips").on('click', 'a', function(e) {
+      e = e || window.event;
+      e.stopPropagation();
+      var b = $(this).text();
+      $('.search-container01 #searchkey').val(b);
+      addcookie();
+      showresult(1, b);
+    });
+  $('.search-container01 #searchkey').bind('keypress', function(event) {
+    if (event.keyCode == "13") {
+      showresult(1);
+      addcookie();
+    }
+  });
+  $('.search-container01 #searchbutton').click(function() {
+    showresult(1);
+    addcookie();
+  });
+  $('.search-container01 #searchkey').click(function(e) {
+    e.stopPropagation();
+    $('.search-container01 .search-cookie').removeClass('hide');
+  });
+
+  showcookie();
+  $(document).on('click', function() {
+    $('.search-container01 .search-cookie').addClass('hide');
+  });
+$('body').show();
+});
+</script>
+  <style>
+
+    .loading.hide {
+      display: none;
+    }
+    .loading {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+    <!-- header-->
+   <header>
+        <div class="header-top navbar-default hidden-xs">
+            <div class="container">
+                <ul class="nav navbar-nav top-list right navbar-right">
+                    <li class="j_hoverBox">
+                        <a href="#" class="j_hoverTitle"><i class="top-icon icon-follow"></i>关注</a>
+                        <div class="bar-item-cont bar-item-weixin j_hoverCont"><img src="[!--news.url--]images/ewm-mobile.png" alt="世邦工业微信二维码"><span>关注世邦工业微信</span></div>
+                    </li>
+                    <li class="lan_wrap">
+                        <a href="javascript:void(0);" class="languages" data-action="lanToogle" data-target=".languagein"><i class="top-icon icon-global"></i>选择区域/语言 ∨</a>
+                        <div class="lan">
+                            <div class="languagein">
+                                <p class="pb15 mb30">了解你所用语言和所在地区的世邦工业的信息.</p>
+                                <ul class="list-unstyled">
+                                    <li><a href="http://www.sbmchina.com">United Kingdom - English</a></li>
+                                    <li><a href="http://fr.sbmchina.com">France - Français</a></li>
+                                    <li><a href="http://es.sbmchina.com">Spanish - Español</a></li>
+                                    <li><a href="http://vn.sbmchina.com">Việt Nam - Tiếng Việt</a></li>
+                                    <li><a href="http://www.shibangchina.com">中国 - 中文（简体）</a></li>
+                                    <li><a href="http://pt.sbmchina.com">Portugal - Português</a></li>
+                                    <li><a href="http://ar.sbmchina.com">لعربية -العربية</a></li>
+                                    <li><a href="http://ru.sbmchina.com">Россия - Русский</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-left top-list">
+                    <li class="yewu"><a href="javascript:;">关于世邦</a>
+                        <ol>
+                            <li><a href="[!--news.url--]about_us/intro.html">公司介绍</a></li>
+                            <li><a href="[!--news.url--]about_us/history.html">发展历程</a></li>
+                            <li><a href="[!--news.url--]about_us/factory.html">生产基地</a></li>
+                            <li><a href="[!--news.url--]about_us/honor.html">公司荣誉</a></li>
+                            <li><a href="[!--news.url--]about_us/customers.html">合作客户</a></li>
+                        </ol>
+                    </li>
+                    <li><a href="[!--news.url--]imagevideo/">图片与视频</a></li>
+                    <li><a href="[!--news.url--]hr/">人力资源</a></li>
+                    <li><a href="/tz/">投资项目</a></li>
+                    <li><a href="http://www.shibangchina.com/tz/xinxiyuan/"><img src="http://www.shibangchina.com/images/xiangmu/jz.gif" alt=""></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="header-nav">
+            <div class="container">
+                <div class="logo navbar-left">
+                    <a href="[!--news.url--]">世邦工业科技集团</a>
+                </div>
+
+                <div class="navbar-nav navbar-right main-nav hidden-xs">
+                    <ul class="list-unstyled nav-list clearfix pull-left">
+                        <li><a href="[!--news.url--]">首页</a></li>
+                        <li class="dropdown"><a href="javascript:;">业务</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="[!--news.url--]business/aggregate/solution/">建筑骨料</a></li>
+                                <li><a href="[!--news.url--]business/mill/solution/">工业磨粉</a></li>
+                                <li><a href="[!--news.url--]business/mine/solution/">矿山处理</a></li>
+                                <li><a href="[!--news.url--]business/material/solution/">绿色建材</a></li>
+                            </ul>
+                        </li>
+                        <li class="pro_btn active"><a href="[!--news.url--]products/">产品</a></li>
+                        <li class="dropdown"><a href="javascript:;">方案</a>
+                <ul class="dropdown-menu">
+                    <li><a href="[!--news.url--]business/application/">重点应用</a></li>
+                    <li><a href="[!--news.url--]business/aggregate/case/">建筑骨料案例</a></li>
+                    <li><a href="[!--news.url--]business/mill/case/">工业磨粉案例</a></li>
+                    <li><a href="[!--news.url--]business/mine/case/">矿山处理案例</a></li>
+                    <li><a href="[!--news.url--]business/material/case/">绿色建材案例</a></li>
+                    <li><a href="[!--news.url--]business/materials/305.html">物料加工</a></li>
+                    <li><a href="[!--news.url--]business/epc/">EPC项目</a></li>
+                </ul>
+                        </li>
+                        <li class="dropdown"><a href="javascript:;">服务</a>
+                            <ul class="dropdown-menu">
+                                <li><a href="[!--news.url--]products/service/fuwubaozhang.html">服务保障</a></li>
+                                <li><a href="[!--news.url--]products/service/fuwufanwei.html">服务范围</a></li>
+                                <li><a href="[!--news.url--]products/service/fuwuwangdian.html">服务网点</a></li>
+                                <li><a href="[!--news.url--]products/maintenance/">维修保养</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="[!--news.url--]media/">动态</a></li>
+                        <li><a href="[!--news.url--]brand/contact.html">联系</a></li>
+                    </ul>
+                   <script src="[!--news.url--]js/search.js"></script>
+                    <div class="header-contact pull-left">
+                        <div class="fl" id="search-button"><img src="http://www.shibangchina.com/images/search/search.png"></div>
+                        <div class="fr">                        <p>24H全国咨询热线</p>
+                        <p>021-58386699</p></div>
+                    </div>
+                </div>
+                <div class="search-content">
+          <div class="search-wrapper">
+            <div class="search-input-wrapper">
+              <div class="input-group">
+                <input type="text" name="search" class="form-control search-input" id="searchkey" placeholder="请输入关键词">
+                <span class="input-group-btn">
+                  <button class="btn btn-search icon-search" id="searchbutton" type="button"></button>
+                </span>
+              </div>
+            </div>
+
+            <div class="recent-search">
+           <ul class="search-cookie hide"></ul>
+            </div>
+          </div>
+        </div>
+            </div>
+        </div>
+        <div class="sidebar-wrapper">
+            <i class="icon-toggle"></i>
+            <div class="sidebar hidden-lg hidden-md hidden-sm">
+                <div class="sidebar-title">
+                    <i class="left-arrow-icon"></i>
+                </div>
+                <div class="sidebar-content">
+                    <ul class="sidebar-menu list-unstyled">
+                        <li class="navbar-icon home-icon"><a href="[!--news.url--]">首页</a></li>
+                        <li class="navbar-icon business-icon">
+                            <a href="javascript:;">业务</a>
+                            <ul class="list-unstyled sidebar-sub-menu">
+                                <li><a href="[!--news.url--]business/aggregate/solution/">建筑骨料</a></li>
+                                <li><a href="[!--news.url--]business/mill/solution/">工业制粉</a></li>
+                                <li><a href="[!--news.url--]business/mine/solution/">矿山处理</a></li>
+                                <li><a href="[!--news.url--]business/material/solution/">绿色建材</a></li>
+                            </ul>
+                        </li>
+                        <li class="navbar-icon product-icon"><a href="[!--news.url--]products/">产品</a></li>
+                        <li class="navbar-icon case-icon">
+                            <a href="javascript:;">案例</a>
+                            <ul class="list-unstyled sidebar-sub-menu">
+                                <li><a href="[!--news.url--]business/aggregate/case/">建筑骨料</a></li>
+                                <li><a href="[!--news.url--]business/mill/case/">工业制粉</a></li>
+                                <li><a href="[!--news.url--]business/mine/case/">矿山处理</a></li>
+                                <li><a href="[!--news.url--]business/material/case/">绿色建材</a></li>
+                            </ul>
+                        </li>
+                        <li class="navbar-icon service-icon">
+                            <a href="javascript:;">服务</a>
+                            <ul class="list-unstyled sidebar-sub-menu">
+                                <li><a href="[!--news.url--]products/service/">服务支持</a></li>
+                                <li><a href="[!--news.url--]products/service/fuwubaozhang.html">服务保障</a></li>
+                                <li><a href="[!--news.url--]products/service/fuwufanwei.html">服务范围</a></li>
+                                <li><a href="[!--news.url--]products/service/fuwuwangdian.html">服务网点</a></li>
+                                <li><a href="[!--news.url--]products/maintenance/">维修保养</a></li>
+                            </ul>
+                        </li>
+                        <li class="navbar-icon brand-icon">
+                            <a href="javascript:;">品牌</a>
+                            <ul class="list-unstyled sidebar-sub-menu">
+                                <li><a href="[!--news.url--]media/">媒体中心</a></li>
+                                <li><a href="[!--news.url--]brand/duty.html">社会责任</a></li>
+                                <li><a href="[!--news.url--]about_us/">关于世邦</a></li>
+                                <li><a href="[!--news.url--]brand/contact.html">联系我们</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="pro_list_wrap hide">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 col-md-5">
+                        <ul>
+                            <li><span>破碎</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]products/pew.html">颚破</a><a href="[!--news.url--]products/pfw.html">反击破</a><a href="[!--news.url--]products/hp.html">圆锥破</a><a href="[!--news.url--]products/vsi5x.html">冲击破</a></div>
+                            </li>
+                            <li><span>移动站</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]products/k.html">轮胎式移动站</a><a href="[!--news.url--]products/ld_yidongpo.html">履带式移动站</a><a href="[!--news.url--]products/mc.html" class="active">McCloskey履带移动破碎站</a></div>
+                            </li>
+                            
+                            <li><span>骨料优化</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]products/vu.html">楼站式干法制砂系统</a></div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-xs-12 col-md-7">
+                        <ul>
+                            <li><span>工业磨粉</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]products/mtw_mill.html">欧版磨</a><a href="[!--news.url--]products/lm_mill.html">立磨</a><a href="[!--news.url--]products/scm_mill.html">微粉磨</a></div>
+                            </li>
+                            <li><span>辅助设备</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]products/s5x.html">筛分设备</a><a href="[!--news.url--]products/zsw.html">给料机</a><a href="[!--news.url--]products/xsd.html">洗砂机</a><a href="[!--news.url--]products/b.html">输送带</a></div>
+                            </li>
+                            <li><span>绿色建材</span>
+                                <div class="pro_list_item"><a href="[!--news.url--]business/material/solution/41.html">干法制砂成套设备</a><a href="[!--news.url--]business/material/solution/43.html">建筑垃圾处理设备</a><a href="[!--news.url--]business/material/solution/45.html">绿色矿山成套设备</a><a href="[!--news.url--]business/material/solution/44.html">干混砂浆成套设备</a></div>
+                            </li>
+                            <li><span><a href="[!--news.url--]products/service/peijianfuwu.html">配件</a></span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+    </header>

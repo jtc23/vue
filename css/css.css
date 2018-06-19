@@ -1,0 +1,16 @@
+p {
+  background-color: #ffffff;
+  color: #1A237E;
+  padding: 15px;
+}
+p .active {
+  color: #1A237E;
+}
+p .active:hover {
+  font-size: 12px;
+}
+.section1 {
+  box-shadow: 2px 2px '' #000;
+  -moz-box-shadow: 2px 2px '' #000;
+  -webkit-box-shadow: 2px 2px '' #000;
+}

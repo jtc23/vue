@@ -1,0 +1,24 @@
+.video+div{
+}
+.reverse{
+  position: relative;
+    height: 1140px;
+}
+.guonei,.guowai,.test{
+  display: block;
+  transition: all 2s;
+  position: absolute;
+    top: 0;
+  left: 0;
+
+  background: #fff;
+    backface-visibility: hidden;
+}
+.guowai,.test{
+  z-index: 1;
+   transform: rotateY(180deg);
+}
+.guonei{
+  z-index: 10;
+}
+

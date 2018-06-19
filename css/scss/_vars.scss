@@ -1,0 +1,39 @@
+/*color start*/
+
+$white: #fff !default;
+$black: #1b1b1b !default;
+$red: #FF0000 !default;
+
+/*body*/
+$body-bg: #f2f2f2;
+$body-color: #666;
+
+/*link*/
+$link-color: #666;
+$link-hover-color: darken($link-color, 15%);
+
+/*button*/
+$btn-bg-color-default: #fff !default;
+$btn-color-default: #666;
+$btn-border-color-default: #ccc;
+$btn-hover-color-default: darken($btn-bg-color-default, 15%);
+$btn-bg-color-black: #333 !default;
+$btn-color-black: #fff;
+$btn-hover-color-black: lighten($btn-bg-color-black, 15%) ;
+
+/*card*/
+$card-bg-color: $white;
+$card-hover-color: #ccc;
+
+/*text*/
+$text-bold-color: #333;
+$text-color: #666;
+
+$error-color: red;
+
+/*color end*/
+
+$html-font-size: 6.25%;
+$body-font-size: 13rem;
+
+$text-line-height: 2.2rem;

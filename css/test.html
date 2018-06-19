@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <style type="text/css">
+    #test{
+      width: 200px;
+      height: 200px;
+      background-color: #f99890;
+    left: 0;right: 0;
+    position: absolute;
+    }
+    .area{
+      width: 800px;height: 800px;position: relative;
+      background-color: #f0f0f0;
+    }
+  </style>
+      <script src="https://csdnimg.cn/public/common/libs/jquery/jquery-1.9.1.min.js" type="text/javascript"></script>
+</head>
+<body>
+<script type="text/javascript">
+  ;$(function(){
+    if (window)
+  });
+</script>
+<script type="text/javascript">
+  function getscroll(){
+    return{
+      scrollTop:document.documentElement.scrollTop||document.body.scrollTop,
+      scrollLeft:document.documentElement.scrollLeft||document.body.scrollLeft
+    }
+
+  }
+  function getpage(e){
+    return{
+      pageX:e.clientX+ getscroll().scrollLeft,
+      pageY:e.clientY+ getscroll().scrollTop
+    }
+  }
+  var gezi={
+    name:'丸子腿',
+    age:'24',
+    birthplace:'zhenjiang',
+  };
+ 
+ var sonnan={
+    name:'丸子腿',
+    age:'24',
+    birthplace:'zhenjiang',
+  };
+ sonnan.name='sonnan';
+ var arr=Array();
+
+  arr[0]=gezi;
+  arr.push(sonnan);
+  arr.push(sonnan,gezi);
+console.log(arr.shift());
+    console.log(arr);
+  
+  /*arr=arr.push(gezi);
+ arr=arr.push(sonnan);*/
+var arr1=new Array(1,2,3,8300,5);
+console.log(arr1.splice(-2,1,2,3));
+console.log(arr1);
+window.onload=function(){
+var imgbox=document.querySelector("#test");
+imgbox.onmousedown=function(e){
+  e=e||window.event;
+    var X=e.clientX-imgbox.offsetLeft;
+      var Y=e.clientY-imgbox.offsetTop;
+      var width=document.querySelector(".area").clientWidth;
+      var height=document.querySelector(".area").clientHeight;
+      console.log(width);
+  document.onmousemove=function(e){
+
+      e=e||window.event;
+      var boxX=getpage(e).pageX-X;
+      var boxY=getpage(e).pageY-Y;
+      console.log(boxX);
+if(boxX<0){
+  boxX=0;
+}else if(boxX>width-200){
+  boxX=width-200;
+}
+if(boxY<0){
+  boxY=0;
+}else if(boxY>height-200){
+  boxY=height-200;
+}
+       imgbox.style.left = boxX+'px';
+  imgbox.style.top = boxY+'px';
+ 
+  }
+
+ }
+ 
+ document.onmouseup=function(){
+  document.onmousemove=null;
+ }
+}
+
+
+
+</script>
+<style type="text/css">
+  .cricle-wrapper {
+    background-color: red;
+    position: relative;
+    width: 488px;
+    height: 488px;
+    left: 50%;
+    margin-left: -244px;
+    margin-top: 40px;
+}
+.circle1, .circle2, .circle3 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 50%;
+    top: 50%;
+    -webkit-animation-timing-function: ease-in-out;
+    animation-timing-function: ease-in-out;
+}
+.circle2 {
+    width: 461px;
+    height: 462px;
+    background: url(http://www.shibangchina.com/images/agent/circle-outer2.png) no-repeat center;
+    -webkit-animation-duration: 12s;
+    animation-duration: 12s;
+    margin-top: -231px;
+}
+.circle3 {
+    width: 488px;
+    height: 488px;
+    background: url(http://www.shibangchina.com/images/agent/circle-outer1.png) no-repeat center;
+    -webkit-animation-duration: 20s;
+    animation-duration: 20s;
+    border-radius: 50%;
+    margin-top: -244px;
+}
+.rotated {
+    -webkit-animation-name: rotated;
+    animation-name: rotated;
+}
+.infinite {
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+}
+@keyframes rotated{
+  0%{-webkit-transform:rotate(0);transform:rotate(0)}
+  100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+}
+@keyframes rotated-reverse{
+  0%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}
+  100%{-webkit-transform:rotate(0);transform:rotate(0)}
+}
+
+.rotated-reverse {
+    -webkit-animation-name: rotated-reverse;
+    animation-name: rotated-reverse;
+}
+.animated {
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+</style>
+<
+<div class="area"><div id='test'></div></div>
+<div class="cricle-wrapper">
+        <div class="circle1 animated rotated infinite"></div>
+        <div class="circle2 animated rotated-reverse infinite"></div>
+        <div class="circle3 animated rotated infinite"></div>
+
+    </div>
+
+</body>
+</html>
